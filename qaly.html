@@ -55,6 +55,12 @@
     </div>
 
     <script id="SetupQALY">
+        home = function () {
+            window.location.href = "/qaly/index.html";
+        }
+        reset = function () {
+            location.reload();
+        }
         const queryString = window.location.search;
         const urlparams = new URLSearchParams(queryString);
         var maxchoices = 4;
@@ -69,8 +75,7 @@
             var scenarioB = "Your worst past living situation";
             var finallowerquestion = "\nAre you saying that life in your worst past living situation would not be worth living?\n";
             var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your worst past living situation?";
-            
-            
+                        
         }
 
         if (urlparams.get("scenario") == "bestvcurrent") {
@@ -212,12 +217,7 @@
         var current = 50;
         var dead = 50;
         var jump = 25;
-        home = function () {
-            window.location.href = "/qaly/index.html";
-        }
-        reset = function () {
-            location.reload();
-        }
+       
         pickA = function () {
             console.log("picked A");
             choicecount = choicecount + 1;
@@ -357,8 +357,7 @@
         <div class="centerbold" id="choices">
 
         </div>
-
-        <br>
+                
         <br>
         <button onclick="reset()" id="resetButton">Reset</button>
         <br>
