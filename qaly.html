@@ -1,6 +1,10 @@
 ﻿<html lang="en">
 <head>
-  <title>How does current situation compare to worst situation?</title>
+      
+
+  <title>
+    QALY App
+  </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -26,6 +30,14 @@
   padding: 10px;
   padding-bottom: 500px;
   }
+  .centerbold {
+          font-weight:bold;
+          position: absolute;
+          left: 55px;
+          right: 60px;
+          padding: 10px;
+          padding-bottom: 500px;
+  }
 
   .centerbutton {
     /*Change the width as much as you like, but make sure 
@@ -38,32 +50,88 @@
   </style>
 </head>
 <body>
-
-
-    <p>Which of the following lives would you prefer?</p>
-
-    <div class=centerbutton>
-        <button onclick="pickA()">Life A</button>
-        <button onclick="pickB()">Life B</button>
+    <div class="container" id="questiontext">
+        <p>questionPlaceholder</p>
     </div>
 
+    <script id="SetupQALY">
+        const queryString = window.location.search;
+        const urlparams = new URLSearchParams(queryString);
+        var maxchoices = 4;
+        var loweranswerbad = "Life in this situation is not worth living";
+        var loweranswergood = "Life in this situation still has some value";
+
+        if (urlparams.get("scenario") == "currentvworst") {
+            var mainQuestion = "Which of the following lives would you prefer?";
+
+            var scenarioA = "Current situation";
+            var shortScenarioA = "Current";
+            var scenarioB = "Your worst past living situation";
+            var finallowerquestion = "\nAre you saying that life in your worst past living situation would not be worth living?\n";
+            var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your worst past living situation?";
+            
+            
+        }
+
+        if (urlparams.get("scenario") == "bestvcurrent") {
+            var mainQuestion = "Which of the following lives would you prefer?";
+
+            var scenarioA = "Best previous living situation";
+            var shortScenarioA = "Best";
+            var scenarioB = "Current situation";
+            var finallowerquestion = "\nAre you saying that life in your current living situation is not worth living?\n";
+            var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your current living situation?";
+            
+
+        }
+
+        if (urlparams.get("scenario") == "perfecthealthvcurrent") {
+            var mainQuestion = "Which of the following lives would you prefer?";
+
+            var scenarioA = "Perfect health";
+            var shortScenarioA = "Perfect";
+            var scenarioB = "Current health";
+            var finallowerquestion = "\nAre you saying that life in your current health situation is not worth living?\n";
+         
+
+            var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your current health situation?";
+            
+
+        }
+
+        
+         
+        
+        
+        
+        
+    </script>
+
+
+    <div class=centerbutton>
+        <button onclick="pickA()" id="buttonA">Life A</button>
+        <button onclick="pickB()" id="buttonB">Life B</button>
+    </div>
 
     <h2>Life A</h2>
 
     <div class="container">
         <div class="center">
-
             <div class="progress" style="width: 100%; height:4.1rem" margin-left:auto>
                 <div class="progress-bar progress-bar-success" id="progressA1" role="progressbar" style="width:50%">
-                    Current situation
-                    <br>
-                    (5 years)
+                    <div class="container" id="scenarioAName" style="width: 100%; height:2.05rem" margin-left:auto>
+                        ScenarioAPlaceholder
+                    </div>
+                    <div class="container" id="scenarioATime" style="width: 100%; height:2.05rem" margin-left:auto>
+                        (5 years)
+                    </div>
+                        
+                    </div>
+                    <div class="progress-bar progress-bar-danger" id="progressA2" role="progressbar" style="width:50%">
+                        Dead
+                        <br>
+                    </div>
                 </div>
-                <div class="progress-bar progress-bar-danger" id="progressA2" role="progressbar" style="width:50%">
-                    Dead
-                    <br>
-                </div>
-            </div>
 
         </div>
         <div class="left">
@@ -88,9 +156,13 @@
 
             <div class="progress" style="width: 100%; height:4.1rem" margin-left:auto>
                 <div class="progress-bar progress-bar-warning" id="progressB" role="progressbar" style="width:100%">
-                    Your worst past living situation
-                    <br>
-                    (10 years)
+                    <div class="container" id="scenarioBName">
+                        scenarioBPlaceholder
+                    </div>
+                    <div class="container" id="scenarioBTime">
+                        (10 years)
+                    </div>
+                    
                 </div>
             </div>
 
@@ -102,9 +174,28 @@
             10 years
         </div>
     </div>
-    </div>
 
+    <script>
+        var A1Name = document.getElementById("scenarioAName");
+        var B1Name = document.getElementById("scenarioBName");
+        var A1Time = document.getElementById("scenarioATime");
+        var B1Time = document.getElementById("scenarioBTime");
+        var qtext = document.getElementById("questiontext");
+        var buttonA = document.getElementById("buttonA");
+        var buttonB = document.getElementById("buttonB");
+        var A1 = document.getElementById("progressA1");
+        var A2 = document.getElementById("progressA2");
 
+        var fontlargeslider = 12;
+        var fontsmallslider = 9;
+
+        
+
+        A1Name.textContent = scenarioA;
+        B1Name.textContent = scenarioB;
+        qtext.textContent = mainQuestion;
+    </script>
+    
     <br>
     <br>
     <br>
@@ -115,16 +206,26 @@
 
 
     <script>
-
+        var choicecount = 0;
+        var bcount = 0;
+        var acount = 0;
         var current = 50;
         var dead = 50;
         var jump = 25;
+        home = function () {
+            window.location.href = "/qaly/index.html";
+        }
+        reset = function () {
+            location.reload();
+        }
         pickA = function () {
             console.log("picked A");
-            let A1 = document.getElementById("progressA1");
-            let A2 = document.getElementById("progressA2");
+            choicecount = choicecount + 1;
+            acount = acount + 1;
+            let counthtml = document.getElementById("choices");
+            //counthtml.textContent = choicecount;
+            
             dead = dead + jump;
-
             current = current - jump;
             jump = jump / 2;
 
@@ -132,52 +233,138 @@
             let daydead = Math.round(12 * ((dead / 10) - Math.floor(dead / 10)));
 
 
-            A1.style.width = current + "%";
-            A2.style.width = dead + "%";
-            let currentText;
-            if (current > 20) {
-                currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
-                A1.innerHTML = "\n                  Current situation\n                  <br>\n                  (" + currentText + ")\n                ";
-            } else {
-                currentText = Math.round(current * 1.2) + " months";
-                A1.innerHTML = "<font size= \"0.05\">\n                  Current\n                  <br>\n                  (" + currentText + ")\n                </font>";
+            if (choicecount == (maxchoices +1)) {
+                buttonA.hidden = true;
+                buttonB.hidden = true;
+                qtext.hidden = true;
 
+                if (acount == (maxchoices +1)) {
+                    A1.style.width = "0%";
+                    A2.style.width = "100%";
+                    A1.innerHTML = "0 years";
+                    counthtml.textContent = "Record response: " + "0 years";
+                } else {
+                    counthtml.textContent = "Record response: " + "9 years 8 months";
+                }
+            } else {
+                A1.style.width = current + "%";
+                A2.style.width = dead + "%";
+                let currentText;
+                if (current > 20) {
+                    currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
+                    A1Name.textContent = scenarioA;
+                    A1Time.textContent = currentText;
+                    A1Name.style.fontSize = fontlargeslider;
+                    A1Time.style.fontSize = fontlargeslider;
+                    //A1.innerHTML = "\n                  " + scenarioA + "\n                  <br>\n                  (" + currentText + ")\n                ";
+
+                } else {
+                    currentText = Math.round(current * 1.2) + " months";
+                    A1Name.textContent = shortScenarioA;
+                    A1Time.textContent = currentText;
+                    A1Name.style.fontSize = fontsmallslider;
+                    A1Time.style.fontSize = fontsmallslider;
+                    //A1.innerHTML = "<font size= \"0.05\">\n                  " + shortScenarioA + "\n                  <br>\n                  (" + currentText + ")\n                </font>";
+
+                }
+                if (choicecount == maxchoices) {
+
+                    if (acount == choicecount) {
+                        qtext.textContent = finallowerquestion;
+                        buttonA.textContent = loweranswerbad;
+                        buttonB.textContent = loweranswergood;
+                    } else {
+                        buttonA.hidden = true;
+                        buttonB.hidden = true;
+                        qtext.hidden = true;
+                        counthtml.textContent = "Record response: " + currentText;
+                    }
+                }
             }
         };
         pickB = function () {
             console.log("picked B");
-            let A1 = document.getElementById("progressA1");
-            let A2 = document.getElementById("progressA2");
+            choicecount = choicecount + 1;
+            bcount = bcount + 1;
+            
+            //let qtext = document.getElementById("questiontext");
+            let counthtml = document.getElementById("choices");
+            
             dead = dead - jump;
             current = current + jump;
             jump = jump / 2;
             let daycurrent = Math.round(12 * ((current / 10) - Math.floor(current / 10)));
             let daydead = Math.round(12 * ((dead / 10) - Math.floor(dead / 10)));
 
+            if (choicecount == (maxchoices +1)) {
+                buttonA.hidden = true;
+                buttonB.hidden = true;
+                qtext.hidden = true;
 
-            A1.style.width = current + "%";
-            A2.style.width = dead + "%";
-            let currentText;
-            if (current > 20) {
-                currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
-                A1.innerHTML = "\n                  Current situation\n                  <br>\n                  (" + currentText + ")\n                ";
+                if (bcount == (maxchoices +1)) {
+                    A1.style.width = "100%";
+                    A2.style.width = "0%";
+
+                    A1.innerHTML = "10 years";
+                    counthtml.textContent = "Record response: " + "10 years";
+                } else {
+                    counthtml.textContent = "Record response: " + "0 years 4 months";
+                }
             } else {
-                currentText = Math.round(current * 1.2) + " months";
-                A1.innerHTML = "<font size= \"0.05\">\n                  Current\n                  <br>\n                  (" + currentText + ")\n                </font>";
-            }
-            //let deadText = Math.floor(dead/10) + ' years ' + daydead + " months";
+                A1.style.width = current + "%";
+                A2.style.width = dead + "%";
+                //counthtml.textContent = choicecount;
 
-            //A2.innerHTML = "\n                  Dead\n                  <br>\n                  (" + deadText + ")\n                ";
+                let currentText;
+                if (current > 20) {
+                    currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
+                    A1Name.textContent = scenarioA;
+                    A1Time.textContent = currentText;
+                    A1Name.style.fontSize = fontlargeslider;
+                    A1Time.style.fontSize = fontlargeslider;
+                } else {
+                    currentText = Math.round(current * 1.2) + " months";
+                    A1Name.textContent = shortScenarioA;
+                    A1Time.textContent = currentText;
+                    A1Name.style.fontSize = fontsmallslider;
+                    A1Time.style.fontSize = fontsmallslider;
+                }
+
+                if (choicecount == maxchoices ) {
+
+                    if (bcount == choicecount) {
+                        qtext.textContent = finalupperquestion;
+                        buttonA.textContent = "Yes";
+                        buttonB.textContent = "No";
+
+                    } else {
+                        buttonA.hidden = true;
+                        buttonB.hidden = true;
+                        qtext.hidden = true;
+                        counthtml.textContent = "Record response: " + currentText;
+                    }
+                }
+
+            }
         };
 
 
     </script>
-    <br>
-    <a href="/qaly/qaly.html">Reset</a>
-    <br>
+    <div class="center">
+        <br>
+        <br>
 
-    <a href="/qaly/index.html">Return to home</a>
+        <div class="centerbold" id="choices">
 
+        </div>
+
+        <br>
+        <br>
+        <button onclick="reset()" id="resetButton">Reset</button>
+        <br>
+        <br>
+        <button onclick="home()" id="homeButton">Return to home</button>
+    </div>
 
 </body>
 </html>
