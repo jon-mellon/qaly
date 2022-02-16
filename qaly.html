@@ -11,62 +11,51 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
-  .right {
-  position: absolute;
-  right: 15px;
-  padding: 0px;
-  padding-top: 20px;
-  }
-  .left {
-  position: absolute;
-  left: 15px;
-  padding: 0px;
-  padding-top: 20px;
-  }
-  .center {
-  position: absolute;
-  left: 55px;
-  right: 60px;
-  padding: 10px;
-  padding-bottom: 500px;
-  }
-  .centerbold {
-          font-weight:bold;
-          position: absolute;
-          left: 55px;
-          right: 60px;
-          padding: 10px;
-          padding-bottom: 500px;
-  }
+      
 
-  .centerbutton {
-    /*Change the width as much as you like, but make sure 
-    margin-left and margin-right + width = 100%*/
-    width:100%;
-    margin-left:25%;
-    margin-right:25%;
-  }
+      .center .title {
+          vertical-align: 100%;
+          text-align: center;
+          font-size:150%;
+      }
+
+      .center img {
+          margin: 0 10px;
+          text-align: center;
+      }
+      .container {
+          text-align: center;
+      }
+      .wrapper {
+          text-align: center;
+      }
+      .progress{
+          text-align: center;
+      }
 
   </style>
+    <script>
+        home = function () {
+            window.location.href = "/qaly/index.html";
+        };
+        reset = function () {
+            location.reload();
+        };
+    </script>
 </head>
 <body>
-    <div class="container" id="questiontext">
+    <div class="center" id="questiontext" style="text-align:center;">
         <p>questionPlaceholder</p>
     </div>
 
     <script id="SetupQALY">
-        home = function () {
-            window.location.href = "/qaly/index.html";
-        }
-        reset = function () {
-            location.reload();
-        }
+
         const queryString = window.location.search;
         const urlparams = new URLSearchParams(queryString);
         var maxchoices = 4;
         var loweranswerbad = "Life in this situation is not worth living";
         var loweranswergood = "Life in this situation still has some value";
-
+        var timeBDefault = "(10 years)";
         if (urlparams.get("scenario") == "currentvworst") {
             var mainQuestion = "Which of the following lives would you prefer?";
 
@@ -75,7 +64,7 @@
             var scenarioB = "Your worst past living situation";
             var finallowerquestion = "\nAre you saying that life in your worst past living situation would not be worth living?\n";
             var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your worst past living situation?";
-                        
+
         }
 
         if (urlparams.get("scenario") == "bestvcurrent") {
@@ -86,7 +75,7 @@
             var scenarioB = "Current situation";
             var finallowerquestion = "\nAre you saying that life in your current living situation is not worth living?\n";
             var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your current living situation?";
-            
+
 
         }
 
@@ -97,87 +86,89 @@
             var shortScenarioA = "Perfect";
             var scenarioB = "Current health";
             var finallowerquestion = "\nAre you saying that life in your current health situation is not worth living?\n";
-         
+
 
             var finalupperquestion = "\n  Is there any amount of life you would trade to avoid your current health situation?";
-            
+
 
         }
 
-        
-         
-        
-        
-        
-        
     </script>
 
-
-    <div class=centerbutton>
+    <div class="wrapper" style="text-align:center;">
         <button onclick="pickA()" id="buttonA">Life A</button>
         <button onclick="pickB()" id="buttonB">Life B</button>
     </div>
 
-    <h2>Life A</h2>
+    <br>
 
-    <div class="container">
-        <div class="center">
-            <div class="progress" style="width: 100%; height:4.1rem" margin-left:auto>
-                <div class="progress-bar progress-bar-success" id="progressA1" role="progressbar" style="width:50%">
-                    <div class="container" id="scenarioAName" style="width: 100%; height:2.05rem" margin-left:auto>
-                        ScenarioAPlaceholder
+    <h1 style="text-align:center;"><span class="title">Life A</span></h1>
+
+    <div id="header-container">
+        <header class="wrapper clearfix">
+            <div class="center">
+                <span class="title">0 years</span>
+                <div class="progress" style="width: 80%; height:4.1rem;display:inline-block">
+                    <div class="progress-bar progress-bar-success" id="progressA1" role="progressbar" style="width:50%">
+                        <div class="container" id="scenarioAName" style="width: 80%; height:2.05rem">
+                            ScenarioAPlaceholder
+                        </div>
+                        <div class="container" id="scenarioATime" style="width: 80%; height:2.05rem">
+                            (5 years)
+                        </div>
+
                     </div>
-                    <div class="container" id="scenarioATime" style="width: 100%; height:2.05rem" margin-left:auto>
-                        (5 years)
-                    </div>
-                        
-                    </div>
-                    <div class="progress-bar progress-bar-danger" id="progressA2" role="progressbar" style="width:50%">
+                    <div class="progress-bar progress-bar-danger" id="progressA2" role="progressbar" style="width: 50%">
                         Dead
                         <br>
                     </div>
                 </div>
-
-        </div>
-        <div class="left">
-            0 years
-        </div>
-        <div class="right">
-            10 years
-        </div>
+                <span class="title">10 years</span>
+                </h3>
+            </div>
+        </header>
     </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
+    <h1 style="text-align:center;"><span class="title">Life B</span></h1>
 
+    <div id="header-container">
+        <header class="wrapper clearfix">
+            <div class="center">
+                <span class="title">0 years</span>
 
-    <h2>Life B</h2>
-    <div class="container">
-        <div class="center">
+                <div class="progress" style="width: 80%; height:4.1rem;display:inline-block">
+                    <div class="progress-bar progress-bar-warning" id="progressB" role="progressbar" style="width:100%;text-align:center;">
+                        <div class="container" id="scenarioBName" style="text-align:center;width:80%">
+                            scenarioBPlaceholder
+                        </div>
+                        <div class="container" id="scenarioBTime"  style="text-align:center;width:80%">
+                            timeplaceholder
+                        </div>
 
-            <div class="progress" style="width: 100%; height:4.1rem" margin-left:auto>
-                <div class="progress-bar progress-bar-warning" id="progressB" role="progressbar" style="width:100%">
-                    <div class="container" id="scenarioBName">
-                        scenarioBPlaceholder
                     </div>
-                    <div class="container" id="scenarioBTime">
-                        (10 years)
-                    </div>
-                    
                 </div>
+                <span class="title">10 years</span>
             </div>
+        </header>
+    </div>
+    
+
+
+    <h1>
+        <div class="title" id="choices" style="text-align:center">
 
         </div>
-        <div class="left">
-            0 years
-        </div>
-        <div class="right">
-            10 years
-        </div>
+    </h1>
+    
+
+    <br>
+    <div class=centerbutton2 style="text-align:center;">
+        <button onclick="reset()" id="resetButton">Reset</button>
+    </div>
+    <br>
+    <div class=centerbutton2 style="text-align:center;">
+        <button onclick="home()" id="homeButton">Return to home</button>
     </div>
 
     <script>
@@ -188,27 +179,19 @@
         var qtext = document.getElementById("questiontext");
         var buttonA = document.getElementById("buttonA");
         var buttonB = document.getElementById("buttonB");
+        var resetButton = document.getElementById("resetButton");
+        var homeButton = document.getElementById("homeButton");
         var A1 = document.getElementById("progressA1");
         var A2 = document.getElementById("progressA2");
 
         var fontlargeslider = 12;
         var fontsmallslider = 9;
 
-        
-
         A1Name.textContent = scenarioA;
         B1Name.textContent = scenarioB;
         qtext.textContent = mainQuestion;
+        B1Time.textContent = timeBDefault;
     </script>
-    
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-
 
     <script>
         var choicecount = 0;
@@ -217,14 +200,14 @@
         var current = 50;
         var dead = 50;
         var jump = 25;
-       
+
         pickA = function () {
             console.log("picked A");
             choicecount = choicecount + 1;
             acount = acount + 1;
             let counthtml = document.getElementById("choices");
             //counthtml.textContent = choicecount;
-            
+
             dead = dead + jump;
             current = current - jump;
             jump = jump / 2;
@@ -233,24 +216,24 @@
             let daydead = Math.round(12 * ((dead / 10) - Math.floor(dead / 10)));
 
 
-            if (choicecount == (maxchoices +1)) {
+            if (choicecount == (maxchoices + 1)) {
                 buttonA.hidden = true;
                 buttonB.hidden = true;
                 qtext.hidden = true;
 
-                if (acount == (maxchoices +1)) {
+                if (acount == (maxchoices + 1)) {
                     A1.style.width = "0%";
                     A2.style.width = "100%";
                     A1.innerHTML = "0 years";
-                    counthtml.textContent = "Record response: " + "0 years";
+                    counthtml.textContent = "Record response: \n" + "0 years";
                 } else {
-                    counthtml.textContent = "Record response: " + "9 years 8 months";
+                    counthtml.textContent = "Record response: \n" + "9 years 8 months";
                 }
             } else {
                 A1.style.width = current + "%";
                 A2.style.width = dead + "%";
                 let currentText;
-                if (current > 20) {
+                if (current > 25) {
                     currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
                     A1Name.textContent = scenarioA;
                     A1Time.textContent = currentText;
@@ -277,7 +260,7 @@
                         buttonA.hidden = true;
                         buttonB.hidden = true;
                         qtext.hidden = true;
-                        counthtml.textContent = "Record response: " + currentText;
+                        counthtml.textContent = "Record response: \n" + currentText;
                     }
                 }
             }
@@ -286,22 +269,22 @@
             console.log("picked B");
             choicecount = choicecount + 1;
             bcount = bcount + 1;
-            
+
             //let qtext = document.getElementById("questiontext");
             let counthtml = document.getElementById("choices");
-            
+
             dead = dead - jump;
             current = current + jump;
             jump = jump / 2;
             let daycurrent = Math.round(12 * ((current / 10) - Math.floor(current / 10)));
             let daydead = Math.round(12 * ((dead / 10) - Math.floor(dead / 10)));
 
-            if (choicecount == (maxchoices +1)) {
+            if (choicecount == (maxchoices + 1)) {
                 buttonA.hidden = true;
                 buttonB.hidden = true;
                 qtext.hidden = true;
 
-                if (bcount == (maxchoices +1)) {
+                if (bcount == (maxchoices + 1)) {
                     A1.style.width = "100%";
                     A2.style.width = "0%";
 
@@ -316,7 +299,7 @@
                 //counthtml.textContent = choicecount;
 
                 let currentText;
-                if (current > 20) {
+                if (current > 25) {
                     currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
                     A1Name.textContent = scenarioA;
                     A1Time.textContent = currentText;
@@ -330,7 +313,7 @@
                     A1Time.style.fontSize = fontsmallslider;
                 }
 
-                if (choicecount == maxchoices ) {
+                if (choicecount == maxchoices) {
 
                     if (bcount == choicecount) {
                         qtext.textContent = finalupperquestion;
@@ -341,29 +324,12 @@
                         buttonA.hidden = true;
                         buttonB.hidden = true;
                         qtext.hidden = true;
-                        counthtml.textContent = "Record response: " + currentText;
+                        counthtml.textContent = "Record response: \n" + currentText;
                     }
                 }
 
             }
         };
-
-
     </script>
-    <div class="center">
-        <br>
-        <br>
-
-        <div class="centerbold" id="choices">
-
-        </div>
-                
-        <br>
-        <button onclick="reset()" id="resetButton">Reset</button>
-        <br>
-        <br>
-        <button onclick="home()" id="homeButton">Return to home</button>
-    </div>
-
 </body>
 </html>
