@@ -233,7 +233,7 @@
                 A1.style.width = current + "%";
                 A2.style.width = dead + "%";
                 let currentText;
-                if (current > 25) {
+                if (current > 20) {
                     currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
                     A1Name.textContent = scenarioA;
                     A1Time.textContent = currentText;
@@ -242,7 +242,13 @@
                     //A1.innerHTML = "\n                  " + scenarioA + "\n                  <br>\n                  (" + currentText + ")\n                ";
 
                 } else {
-                    currentText = Math.round(current * 1.2) + " months";
+                    let currentyear = Math.floor(current / 10);
+                    if (currentyear < 1) {
+                        currentText = Math.round(current * 1.2) + " months";
+                    } else {
+                        currentText = Math.floor(current / 10) + ' y ' + daycurrent + " months";
+                    }
+
                     A1Name.textContent = shortScenarioA;
                     A1Time.textContent = currentText;
                     A1Name.style.fontSize = fontsmallslider;
@@ -260,7 +266,7 @@
                         buttonA.hidden = true;
                         buttonB.hidden = true;
                         qtext.hidden = true;
-                        counthtml.textContent = "Record response: \n" + currentText;
+                        counthtml.textContent = "Record response: \n" + currentText.replace(" y ", " years ");
                     }
                 }
             }
@@ -299,14 +305,21 @@
                 //counthtml.textContent = choicecount;
 
                 let currentText;
-                if (current > 25) {
+                if (current > 20) {
                     currentText = Math.floor(current / 10) + ' years ' + daycurrent + " months";
                     A1Name.textContent = scenarioA;
                     A1Time.textContent = currentText;
                     A1Name.style.fontSize = fontlargeslider;
                     A1Time.style.fontSize = fontlargeslider;
                 } else {
-                    currentText = Math.round(current * 1.2) + " months";
+                    let currentyear = Math.floor(current / 10);
+                    if (currentyear < 1) {
+                        currentText = Math.round(current * 1.2) + " months";
+                    } else {
+                        currentText = Math.floor(current / 10) + ' y ' + daycurrent + " months";
+                    }
+                    
+                    
                     A1Name.textContent = shortScenarioA;
                     A1Time.textContent = currentText;
                     A1Name.style.fontSize = fontsmallslider;
@@ -324,7 +337,7 @@
                         buttonA.hidden = true;
                         buttonB.hidden = true;
                         qtext.hidden = true;
-                        counthtml.textContent = "Record response: \n" + currentText;
+                        counthtml.textContent = "Record response: \n" + currentText.replace(" y ", " years ");
                     }
                 }
 
